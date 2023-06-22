@@ -105,7 +105,7 @@ apiPass="$6"
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-Site=$(dialog $8 $9 --selecttitle "Jamf Pro Site:" --selectvalues "$7" | grep "SelectedOption" | awk -F " : " '{print $NF}' | tr -d '"')
+Site=$(dialog $8 $9 --button1text "Choose Site" --button2text "Cancel" --selecttitle "Jamf Pro Site:" --selectvalues "$7" | grep "SelectedOption" | awk -F " : " '{print $NF}' | tr -d '"')
 
 ## Create xml
 cat << EOF > /tmp/Set_Site.xml
