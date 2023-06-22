@@ -95,9 +95,9 @@ fi
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-apiURL="$5"
-apiUser="$6"
-apiPass="$7"
+apiURL="$4"
+apiUser="$5"
+apiPass="$6"
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -107,7 +107,7 @@ apiPass="$7"
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 ## Get a list of all sites and their IDs (values comma-delimited)
-Site=$(dialog --blurscreen --selecttitle "Jamf Pro Site:" --selectvalues "$8" | grep "SelectedOption" | awk -F " : " '{print $NF}' | tr -d '"')
+Site=$(dialog --blurscreen --selecttitle "Jamf Pro Site:" --selectvalues "$7" | grep "SelectedOption" | awk -F " : " '{print $NF}' | tr -d '"')
 
 ## Create xml
 cat << EOF > /tmp/Set_Site.xml
@@ -125,7 +125,7 @@ EOF
 SerialNumber=$(/usr/sbin/system_profiler SPHardwareDataType | grep "Serial Number (system)" | awk '{print $4}')
 
 ## Update/change the Site for the computer
-curl -sfku "$6":"$7" "$5/JSSResource/computers/serialnumber/${SerialNumber}/subset/general" -T /tmp/Set_Site.xml -X PUT
+curl -sfku "$5":"$6" "$4/JSSResource/computers/serialnumber/${SerialNumber}/subset/general" -T /tmp/Set_Site.xml -X PUT
 sleep 5
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
