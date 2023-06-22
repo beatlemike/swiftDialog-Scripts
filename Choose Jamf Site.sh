@@ -102,6 +102,7 @@ apiPass="$6"
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
 # List sites (values comma-delimited) and save as xml
+# $8 and $9 variables dor swiftDialog (--blurscreen, --quitkey x, etc)
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
