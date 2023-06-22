@@ -12,21 +12,17 @@
 # HISTORY
 #
 # Version 0.0.1, 16-June-2023, Mike Fredette (@beatlemike)
-#   Original version
+#
+# - Original version
+# Version 0.0.2, 22-June-2023, Mike Fredette (@beatlemike)
+# - Added Jamf Variables
 #
 ####################################################################################################
 
-
-
-####################################################################################################
-#
-# Variables
-#
-####################################################################################################
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
-# Pre-flight Check: Turn off `jamf` binary check-in
+# Turn off Jamf binary check-in (This can be commented out if not used for setup.)
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -35,7 +31,7 @@ launchctl unload /Library/LaunchDaemons/com.jamfsoftware.task.1.plist
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
-# Pre-flight Check: Validate / install swiftDialog (Thanks big bunches, @acodega!)
+# Pre-flight Check: Validate / install swiftDialog (Borrowed from @dan-snelson and @acodega!)
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -102,11 +98,10 @@ apiPass="$6"
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
-# List sites (values comma-delimited)
+# List sites (values comma-delimited) and save as xml
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-## Get a list of all sites and their IDs (values comma-delimited)
 Site=$(dialog --blurscreen --selecttitle "Jamf Pro Site:" --selectvalues "$7" | grep "SelectedOption" | awk -F " : " '{print $NF}' | tr -d '"')
 
 ## Create xml
@@ -121,16 +116,26 @@ cat << EOF > /tmp/Set_Site.xml
 </computer>
 EOF
 
-## Get the computer serial number
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#
+# Get the computer serial number
+#
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
 SerialNumber=$(/usr/sbin/system_profiler SPHardwareDataType | grep "Serial Number (system)" | awk '{print $4}')
 
-## Update/change the Site for the computer
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#
+# Update/change the Site for the computer
+#
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
 curl -sfku "$5":"$6" "$4/JSSResource/computers/serialnumber/${SerialNumber}/subset/general" -T /tmp/Set_Site.xml -X PUT
 sleep 5
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
-# Post-flight Check: Turn on `jamf` binary check-in
+# Turn on Jamf binary check-in
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
