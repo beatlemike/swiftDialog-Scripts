@@ -12,7 +12,6 @@
 # HISTORY
 #
 # Version 0.0.1, 16-June-2023, Mike Fredette (@beatlemike)
-#
 # - Original version
 # Version 0.0.2, 22-June-2023, Mike Fredette (@beatlemike)
 # - Added Jamf Variables
