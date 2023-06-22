@@ -13,8 +13,12 @@
 #
 # Version 0.0.1, 16-June-2023, Mike Fredette (@beatlemike)
 # - Original version
-# Version 0.0.2, 22-June-2023, Mike Fredette (@beatlemike)
+# Version 0.0.2, 21-June-2023, Mike Fredette (@beatlemike)
 # - Added Jamf Variables
+# Version 0.0.3, 22-June-2023, Mike Fredette (@beatlemike)
+# - Fixed Jamf Variables
+# - Cleaned xml output
+# - Added $8 and $9 variables dor swiftDialog (--blurscreen, --quitkey x, etc)
 #
 ####################################################################################################
 
@@ -101,14 +105,13 @@ apiPass="$6"
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-Site=$(dialog --blurscreen --selecttitle "Jamf Pro Site:" --selectvalues "$7" | grep "SelectedOption" | awk -F " : " '{print $NF}' | tr -d '"')
+Site=$(dialog $8 $9 --selecttitle "Jamf Pro Site:" --selectvalues "$7" | grep "SelectedOption" | awk -F " : " '{print $NF}' | tr -d '"')
 
 ## Create xml
 cat << EOF > /tmp/Set_Site.xml
 <computer>
   <general>
     <site>
-     <id>$ID</id>
      <name>$Site</name>
     </site>
   </general>
