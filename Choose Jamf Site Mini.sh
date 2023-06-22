@@ -31,7 +31,7 @@ apiPass="$6"
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
 # List sites (values comma-delimited) and save as xml
-# - $8 and $9 can be used as dialog variables (--blurscreen, --quitkey x, etc)
+# $8 and $9 can be used as dialog variables (--blurscreen, --quitkey x, etc)
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
